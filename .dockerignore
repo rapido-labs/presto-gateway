@@ -1,0 +1,12 @@
+**/target
+
+.editorconfig
+.idea
+*.iml
+.DS_Store
+
+.dockerignore
+.gitignore
+Dockerfile
+
+*.md
