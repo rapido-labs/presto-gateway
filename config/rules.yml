@@ -1,0 +1,16 @@
+---
+name: "presto1"
+description: "if query id is 1, route to presto1 group"
+priority: 0
+condition: "request.getHeader(\"X-Metabase-Card-Id\") == \"1\""
+actions:
+  - "result.put(\"routingGroup\", \"presto1\")"
+
+
+---
+name: "presto2"
+description: "if query id is 2, route to presto2 group"
+priority: 0
+condition: "request.getHeader(\"X-Metabase-Card-Id\") == \"2\""
+actions:
+  - "result.put(\"routingGroup\", \"presto2\")"
