@@ -41,6 +41,7 @@ public class HaGatewayTestUtils {
     DataStoreConfiguration db = new DataStoreConfiguration(jdbcUrl, "sa", "sa", "org.h2.Driver");
     JdbcConnectionManager connectionManager = new JdbcConnectionManager(db);
     connectionManager.open();
+    Base.exec("SET MODE MYSQL");
     Base.exec(HaGatewayTestUtils.getResourceFileContent("gateway-ha-persistence.sql"));
     connectionManager.close();
   }

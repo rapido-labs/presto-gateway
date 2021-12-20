@@ -1,4 +1,3 @@
-SET MODE MYSQL;
 CREATE TABLE IF NOT EXISTS gateway_backend (
 name VARCHAR(256) PRIMARY KEY,
 routing_group VARCHAR (256),
