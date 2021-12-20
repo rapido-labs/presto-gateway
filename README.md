@@ -2,6 +2,14 @@
 
 A load balancer / proxy / gateway for presto compute engine.
 
+
+Quick way to start 
+------------------
+
+```bash
+  docker-compose up  && open http://localhost:8082
+```
+
 How to setup a dev environment
 ------------------------------
 Step 1: setup mysql. Install docker and run the below command when setting up first time:
