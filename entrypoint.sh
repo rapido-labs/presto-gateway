@@ -41,6 +41,7 @@ check_mysql_connection
 setup_mysql_dev_schema
 echo "Generating config to /tmp/gateway-ha-config.yml"
 
+# TODO: This is a hack to get the config to work. this is to avoid db config hardcoded in the config file.
 envsubst < /var/lib/presto-gateway/config/gateway-ha-config.yml.template > /tmp/gateway-ha-config.yml
 java -jar /var/lib/presto-gateway/gateway-ha.jar server /tmp/gateway-ha-config.yml
 
