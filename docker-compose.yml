@@ -32,6 +32,6 @@ services:
       DB_NAME: prestogateway
       DB_PORT: 3306
     volumes:
-      - ./config/gateway-ha-config.yml.template:/var/lib/presto-gateway/gateway-ha-config.yml.template
-      - ./config/rules.yml:/var/lib/presto-gateway/rules.yml
+      - ./config/gateway-ha-config.yml.template:/var/lib/presto-gateway/config/gateway-ha-config.yml.template
+      - ./config/rules.yml:/var/lib/presto-gateway/config/rules.yml
       
