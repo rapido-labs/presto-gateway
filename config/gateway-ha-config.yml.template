@@ -8,9 +8,9 @@ routingRules:
   rulesConfigPath: /var/lib/presto-gateway/rules.yml
 
 dataStore:
-  jdbcUrl: jdbc:mysql://mysqldb:3306/prestogateway
-  user: root
-  password: root123
+  jdbcUrl: ${JDBC_URL}
+  user: ${DB_USER}
+  password: ${DB_PASS}
   driver: com.mysql.cj.jdbc.Driver
 
 

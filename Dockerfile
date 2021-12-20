@@ -8,7 +8,8 @@ COPY pom.xml /presto-gateway/
 
 
 RUN mvn -Dmaven.artifact.threads=100  clean install  -Dmaven.test.skip=true
-
+RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst
+RUN chmod +x envsubst
 
 FROM openjdk:8u242-jre-slim
 
@@ -20,6 +21,7 @@ WORKDIR /var/lib/presto-gateway
 
 COPY --from=builder /presto-gateway/gateway-ha/target/gateway-ha-*-jar-with-dependencies.jar /var/lib/presto-gateway/gateway-ha.jar
 COPY --from=builder /presto-gateway/gateway-ha/src/main/resources/gateway-ha-persistence.sql /var/lib/presto-gateway/gateway-ha-persistence.sql
+COPY --from=builder /presto-gateway/envsubst /usr/local/bin
 COPY ./entrypoint.sh /entrypoint.sh
 
 

@@ -39,6 +39,8 @@ setup_mysql_dev_schema()
 
 check_mysql_connection
 setup_mysql_dev_schema
-echo "Reading config from /var/lib/presto-gateway/gateway-ha-config.yml"
-java -jar /var/lib/presto-gateway/gateway-ha.jar server /var/lib/presto-gateway/gateway-ha-config.yml
+echo "Generating config to /tmp/gateway-ha-config.yml"
+
+envsubst < /var/lib/presto-gateway/gateway-ha-config.yml.template > /tmp/gateway-ha-config.yml
+java -jar /var/lib/presto-gateway/gateway-ha.jar server /tmp/gateway-ha-config.yml
 
