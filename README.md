@@ -7,7 +7,7 @@ Quick way to start
 ------------------
 
 ```bash
-  docker-compose up  && open http://localhost:8082
+  docker-compose up  -d && open http://localhost:8082
 ```
 
 How to setup a dev environment
