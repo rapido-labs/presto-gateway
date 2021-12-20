@@ -34,7 +34,7 @@ setup_mysql_dev_schema()
     check_mysql_connection
 
     echo "Setting up DB: mysql"
-    /usr/bin/mysql -u"${DB_USER}" -p"${DB_PASS}" -h "${DB_HOST}" --port="${DB_PORT}" -D prestogateway < /var/lib/presto-gateway/gateway-ha-persistence.sql
+    /usr/bin/mysql -u"${DB_USER}" -p"${DB_PASS}" -h "${DB_HOST}" --port="${DB_PORT}" -D ${DB_NAME} < /var/lib/presto-gateway/gateway-ha-persistence.sql
 }
 
 check_mysql_connection
