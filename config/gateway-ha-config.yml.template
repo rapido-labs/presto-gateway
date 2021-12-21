@@ -3,6 +3,14 @@ requestRouter:
   name: prestoRouter
   historySize: 1000
 
+initialBackends:
+    backends:
+        - name: presto1
+          proxyTo: http://localhost:1010
+        - name: presto2
+          proxyTo: http://localhost:1011
+          routingGroup: prime
+
 routingRules:
   rulesEngineEnabled: true
   rulesConfigPath: /var/lib/presto-gateway/rules.yml
