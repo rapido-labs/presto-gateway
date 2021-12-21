@@ -3,6 +3,17 @@ requestRouter:
   name: testPrestoRouter
   historySize: 1000
 
+initialBackends:
+  backends:
+    - active: true
+      name: presto1
+      proxyTo: http://localhost:21000
+      routingGroup: adhoc
+    - active: true
+      name: presto2
+      proxyTo: http://localhost:22000
+      routingGroup: scheduled
+
 server:
   applicationConnectors:
     - type: http

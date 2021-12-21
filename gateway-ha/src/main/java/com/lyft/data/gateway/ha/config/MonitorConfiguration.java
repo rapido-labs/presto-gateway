@@ -2,6 +2,7 @@ package com.lyft.data.gateway.ha.config;
 
 import com.lyft.data.gateway.ha.clustermonitor.ActiveClusterMonitor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 public class MonitorConfiguration {

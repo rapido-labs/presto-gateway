@@ -12,4 +12,7 @@ public class HaGatewayConfiguration extends AppConfiguration {
   private DataStoreConfiguration dataStore;
   private MonitorConfiguration monitor = new MonitorConfiguration();
   private RoutingRulesConfiguration routingRules = new RoutingRulesConfiguration();
+  private InitialBackendsConfiguration initialBackends;
+
+
 }
