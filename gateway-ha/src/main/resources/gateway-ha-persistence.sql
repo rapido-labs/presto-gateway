@@ -5,7 +5,6 @@ backend_url VARCHAR (256),
 external_url VARCHAR (256),
 active BOOLEAN
 );
-
 CREATE TABLE IF NOT EXISTS query_history (
 query_id VARCHAR(256) PRIMARY KEY,
 query_text VARCHAR (256),
@@ -76,3 +75,16 @@ CREATE TABLE IF NOT EXISTS exact_match_source_selectors (
     PRIMARY KEY (environment, source, query_type),
     UNIQUE (source, environment, query_type, resource_group_id)
 );
+
+ALTER TABLE gateway_backend ADD INDEX (routing_group);
+
+
+CREATE TABLE IF NOT EXISTS query_routing (
+    query_id VARCHAR(256) NOT NULL PRIMARY KEY,
+    routing_group VARCHAR (256),
+
+    FOREIGN KEY (routing_group) REFERENCES gateway_backend (routing_group)
+);
+
+
+

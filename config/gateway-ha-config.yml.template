@@ -13,7 +13,7 @@ initialBackends:
 
 routingRules:
   rulesEngineEnabled: true
-  rulesConfigPath: /var/lib/presto-gateway/rules.yml
+  rulesConfigPath: /var/lib/presto-gateway/config/rules.yml
 
 dataStore:
   jdbcUrl: ${JDBC_URL}
@@ -41,7 +41,7 @@ notifier:
     - prestodev@yourorg.com
 
 modules:
-  - com.lyft.data.gateway.ha.module.HaGatewayProviderModule
+  - com.lyft.data.gateway.ha.module.HaGatewayProviderModuleWithCardIdRouting
 
 managedApps:
   - com.lyft.data.gateway.ha.GatewayManagedApp
