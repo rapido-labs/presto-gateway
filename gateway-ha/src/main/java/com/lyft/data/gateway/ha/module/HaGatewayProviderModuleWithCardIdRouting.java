@@ -8,6 +8,7 @@ import com.lyft.data.gateway.ha.router.RoutingGroupSelectorByCardId;
 import com.lyft.data.proxyserver.ProxyHandler;
 import io.dropwizard.setup.Environment;
 
+
 public class HaGatewayProviderModuleWithCardIdRouting extends HaGatewayProviderModule {
 
   public HaGatewayProviderModuleWithCardIdRouting(HaGatewayConfiguration configuration,
@@ -28,6 +29,6 @@ public class HaGatewayProviderModuleWithCardIdRouting extends HaGatewayProviderM
       getRoutingManager(),
       routingGroupSelector,
       getApplicationPort(),
-      requestMeter);
+      requestMeter, super.queue, configuration().getExternalPresto());
   }
 }

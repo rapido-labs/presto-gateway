@@ -13,6 +13,7 @@ public class HaGatewayConfiguration extends AppConfiguration {
   private MonitorConfiguration monitor = new MonitorConfiguration();
   private RoutingRulesConfiguration routingRules = new RoutingRulesConfiguration();
   private InitialBackendsConfiguration initialBackends;
+  private ExternalPrestoConfiguration externalPresto;
 
 
 }

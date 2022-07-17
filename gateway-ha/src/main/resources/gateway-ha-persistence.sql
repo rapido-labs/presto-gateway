@@ -83,4 +83,5 @@ CREATE TABLE IF NOT EXISTS query_routing (
     routing_group VARCHAR (256),
 
     FOREIGN KEY (routing_group) REFERENCES gateway_backend (routing_group)
+
 );

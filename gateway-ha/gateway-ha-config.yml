@@ -7,11 +7,22 @@ requestRouter:
   name: prestoRouter
   historySize: 1000
 
+initialBackends:
+  backends:
+    - name: adhoc
+      proxyTo: http://192.168.1.4:8085
+
+externalPresto:
+  jdbcUrl:  jdbc:trino://192.168.1.4:8085
+  user: external-presto
+  enabled: true
+
 dataStore:
   jdbcUrl: jdbc:mysql://127.0.0.1:3306/prestogateway
   user: root
   password: root123
   driver: com.mysql.cj.jdbc.Driver
+
 
 server:
   applicationConnectors:
@@ -28,17 +39,11 @@ notifier:
   recipients:
     - prestodev@yourorg.com
 
-# This can be adjusted based on the coordinator state
-monitor:
-  connectionTimeout: 15
-
 modules:
-  - com.lyft.data.gateway.ha.module.HaGatewayProviderModule
-  - com.lyft.data.gateway.ha.module.ClusterStateListenerModule
+  - com.lyft.data.gateway.ha.module.HaGatewayProviderModuleWithCardIdRouting
 
 managedApps:
   - com.lyft.data.gateway.ha.GatewayManagedApp
-  - com.lyft.data.gateway.ha.clustermonitor.ActiveClusterMonitor
 
 # Logging settings.
 logging:
@@ -52,8 +57,8 @@ logging:
   appenders:
     - type: console
     - type: file
-      currentLogFilename: /var/log/prestoproxy/prestoproxy-java.log
-      archivedLogFilenamePattern: /var/log/prestoproxy/prestoproxy-java-%d{yyyy-MM-dd}-%i.log.gz
+      currentLogFilename: /tmp/prestoproxy-java.log
+      archivedLogFilenamePattern: /tmp/prestoproxy/prestoproxy-java-%d{yyyy-MM-dd}-%i.log.gz
       archivedFileCount: 7
       timeZone: UTC
       maxFileSize: 100MB

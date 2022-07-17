@@ -7,7 +7,7 @@ COPY gateway-ha                      /presto-gateway/gateway-ha
 COPY pom.xml /presto-gateway/
 
 
-RUN mvn -Dmaven.artifact.threads=100  clean install  -Dmaven.test.skip=true
+RUN mvn -Dmaven.artifact.threads=100  clean install  -Dmaven.test.skip=true -Dcheckstyle.skip
 RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst
 RUN chmod +x envsubst
 

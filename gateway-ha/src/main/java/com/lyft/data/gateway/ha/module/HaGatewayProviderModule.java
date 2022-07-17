@@ -7,6 +7,7 @@ import com.lyft.data.baseapp.AppModule;
 import com.lyft.data.gateway.ha.config.HaGatewayConfiguration;
 import com.lyft.data.gateway.ha.config.RequestRouterConfiguration;
 import com.lyft.data.gateway.ha.config.RoutingRulesConfiguration;
+import com.lyft.data.gateway.ha.handler.ExternalPrestoRequestHandler;
 import com.lyft.data.gateway.ha.handler.QueryIdCachingProxyHandler;
 import com.lyft.data.gateway.ha.persistence.JdbcConnectionManager;
 import com.lyft.data.gateway.ha.router.GatewayBackendManager;
@@ -23,6 +24,12 @@ import com.lyft.data.proxyserver.ProxyServer;
 import com.lyft.data.proxyserver.ProxyServerConfiguration;
 import io.dropwizard.setup.Environment;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.IntStream;
+
 public class HaGatewayProviderModule extends AppModule<HaGatewayConfiguration, Environment> {
 
   private final ResourceGroupsManager resourceGroupsManager;
@@ -30,6 +37,7 @@ public class HaGatewayProviderModule extends AppModule<HaGatewayConfiguration, E
   private final QueryHistoryManager queryHistoryManager;
   private final RoutingManager routingManager;
   private final JdbcConnectionManager connectionManager;
+  final BlockingQueue<QueryDetails> queue;
 
   public HaGatewayProviderModule(HaGatewayConfiguration configuration, Environment environment) {
     super(configuration, environment);
@@ -39,6 +47,14 @@ public class HaGatewayProviderModule extends AppModule<HaGatewayConfiguration, E
     queryHistoryManager = new HaQueryHistoryManager(connectionManager);
     routingManager =
         new HaRoutingManager(gatewayBackendManager, (HaQueryHistoryManager) queryHistoryManager);
+    queue = new LinkedBlockingQueue<>();
+    this.startExternalPrestoRequestHandlerThread();
+  }
+  protected void startExternalPrestoRequestHandlerThread() {
+    ExternalPrestoRequestHandler externalPrestoRequestHandler =
+            new ExternalPrestoRequestHandler(configuration().getExternalPresto(), this.queue);
+    ExecutorService executorService = Executors.newFixedThreadPool(100);
+    IntStream.range(0, 100).forEach(i -> executorService.submit(externalPrestoRequestHandler));
   }
 
   protected ProxyHandler getProxyHandler() {
@@ -61,7 +77,7 @@ public class HaGatewayProviderModule extends AppModule<HaGatewayConfiguration, E
         getRoutingManager(),
         routingGroupSelector,
         getApplicationPort(),
-        requestMeter);
+        requestMeter, this.queue, configuration().getExternalPresto());
   }
 
   @Provides

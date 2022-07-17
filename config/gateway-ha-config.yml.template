@@ -5,14 +5,16 @@ requestRouter:
 
 initialBackends:
     backends:
-        - name: presto1
-          proxyTo: http://localhost:1010
-        - name: presto2
-          proxyTo: http://localhost:1011
-          routingGroup: prime
+        - name: presto
+          proxyTo: http://192.168.1.4:8085
+
+externalPresto:
+  jdbcUrl:  jdbc:presto://192.168.1.4:8085
+  user: external-presto
+  password: foo
 
 routingRules:
-  rulesEngineEnabled: true
+  rulesEngineEnabled: false
   rulesConfigPath: /var/lib/presto-gateway/config/rules.yml
 
 dataStore:
